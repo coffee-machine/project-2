@@ -32,6 +32,7 @@ Your tasks are as follows.
 	* (Bonus assignment) Next, assume that you have two hands, so that you potentially can move two vehicles (one position) simultaneously. Furthermore assume that you are left-handed so that it takes 3 seconds to move a vehicle one position with the left hand but 5 seconds to move a vehicle one position with the right hand.
 
 In both cases, use Uppaal to find the fastest way of solving the puzzle (not measured in computation time, but in terms of the overall time that it takes to move all the vehicles). Tip: Use UPPAAL's diagnostic trace feature and ask for the fastest trace.
+
 6. Use (and describe) the resulting message sequence charts for illustrating the solutions.
 7. Finish your report by briefly commenting on what was your experience working with the tool.
 8. Compile a single PDF file and post the file on the intranet by the stated deadline.
