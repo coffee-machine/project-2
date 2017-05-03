@@ -28,8 +28,9 @@ Your tasks are as follows.
 3. Using your model and the model checker of UPPAAL solve the two puzzles shown in the picture [here](http://www.ru.is/faculty/luca/MV09SPRING/puzzle.jpg). What is the shortest number of steps/moves needed to solve the puzzle?
 4. Can you use UPPAAL to solve the game for (one of) the two hard configurations given [here](http://quomodocumque.wordpress.com/2012/02/18/the-hardest-rush-hour-position/)?
 5. Extend your model with timing constraint.
-* First assume that it takes 5 seconds to move a truck and 2 seconds to move a car.
-* (Bonus assignment) Next, assume that you have two hands, so that you potentially can move two vehicles (one position) simultaneously. Furthermore assume that you are left-handed so that it takes 3 seconds to move a vehicle one position with the left hand but 5 seconds to move a vehicle one position with the right hand.
+	* First assume that it takes 5 seconds to move a truck and 2 seconds to move a car.
+	* (Bonus assignment) Next, assume that you have two hands, so that you potentially can move two vehicles (one position) simultaneously. Furthermore assume that you are left-handed so that it takes 3 seconds to move a vehicle one position with the left hand but 5 seconds to move a vehicle one position with the right hand.
+
 In both cases, use Uppaal to find the fastest way of solving the puzzle (not measured in computation time, but in terms of the overall time that it takes to move all the vehicles). Tip: Use UPPAAL's diagnostic trace feature and ask for the fastest trace.
 6. Use (and describe) the resulting message sequence charts for illustrating the solutions.
 7. Finish your report by briefly commenting on what was your experience working with the tool.
