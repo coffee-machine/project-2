@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE nta PUBLIC '-//Uppaal Team//DTD Flat System 1.1//EN' 'http://www.it.uu.se/research/group/darts/uppaal/flat-1_2.dtd'>
+<nta>
+	<declaration>// Place global declarations here.
+    bool board[6][6] := { {1,1,1,1,1,0},
+                          {0,0,1,0,1,1},
+                          {0,1,1,1,1,1}, 
+                          {1,1,0,1,1,1},
+                          {1,0,0,1,1,1},
+                          {1,1,1,1,1,1}
+                        };</declaration>
+	<template>
+		<name x="5" y="5">Car</name>
+		<parameter>int size, int x, int y, int direction</parameter>
+		<declaration>// Place local declarations here.
+
+int forward;
+int backward;
+
+void move(int direction) {
+    
+}
+
+bool isOpen(int direction) {
+    return true;
+}
+
+void initCar() {
+    forward := direction;
+    if (forward &lt;= 1) {
+        backward := forward + 2;
+    } else {
+        backward := forward - 2;
+    }
+}</declaration>
+		<location id="id0" x="-17" y="144">
+		</location>
+		<location id="id1" x="-272" y="-144">
+			<name x="-323" y="-178">backwardMove</name>
+		</location>
+		<location id="id2" x="221" y="-144">
+			<name x="178" y="-178">forwardMove</name>
+		</location>
+		<location id="id3" x="-272" y="0">
+		</location>
+		<location id="id4" x="221" y="0">
+		</location>
+		<location id="id5" x="-17" y="0">
+		</location>
+		<init ref="id0"/>
+		<transition>
+			<source ref="id0"/>
+			<target ref="id5"/>
+			<label kind="assignment" x="-8" y="76">initCar()</label>
+		</transition>
+		<transition>
+			<source ref="id2"/>
+			<target ref="id5"/>
+		</transition>
+		<transition>
+			<source ref="id1"/>
+			<target ref="id5"/>
+		</transition>
+		<transition>
+			<source ref="id3"/>
+			<target ref="id1"/>
+			<label kind="assignment" x="-391" y="-76">move(backward)</label>
+		</transition>
+		<transition>
+			<source ref="id4"/>
+			<target ref="id2"/>
+			<label kind="assignment" x="229" y="-76">move(forward)</label>
+		</transition>
+		<transition>
+			<source ref="id5"/>
+			<target ref="id3"/>
+			<label kind="guard" x="-204" y="8">isOpen(backward)</label>
+		</transition>
+		<transition>
+			<source ref="id5"/>
+			<target ref="id4"/>
+			<label kind="guard" x="42" y="8">isOpen(forward)</label>
+		</transition>
+	</template>
+	<system>// Place template instantiations here.
+Car0 = Car(2,0,0,0);
+Car1 = Car(2,0,0,1);
+// List one or more processes to be composed into a system.
+system Car0, Car1;
+    </system>
+	<queries>
+	</queries>
+</nta>
