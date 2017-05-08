@@ -51,7 +51,7 @@ void move(int direction) {
 
 bool isOpen(int direction) {
     if (direction == 0) { // NORTH
-        if (y_location + 2 &lt;= 6) { // RANGE CHECK
+        if (y_location + 2 &lt;= 5) { // RANGE CHECK
             if (board[x_location][y_location + 2]) {        
                 return false;
             } else {
@@ -61,7 +61,7 @@ bool isOpen(int direction) {
         }
     }
     if (direction == 1) { // EAST
-        if (x_location + 2 &lt;= 6) { // RANGE CHECK
+        if (x_location + 2 &lt;= 5) { // RANGE CHECK
             if (board[x_location + 2][y_location]) {
                 return false;
             } else {
@@ -95,8 +95,8 @@ bool isOpen(int direction) {
 
 void initCar() {
     forth := direction;
-    x_location := x;
-    y_location := y;
+    x_location := init_x;
+    y_location := init_y;
     if (forth &lt;= 1) {
         back := forth + 2;
     } else {
