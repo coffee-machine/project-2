@@ -2,21 +2,13 @@
 <!DOCTYPE nta PUBLIC '-//Uppaal Team//DTD Flat System 1.1//EN' 'http://www.it.uu.se/research/group/darts/uppaal/flat-1_2.dtd'>
 <nta>
 	<declaration>// Place global declarations here.
-//    bool board[6][6] := { {1,1,1,1,1,0},
-//                          {0,0,1,0,1,1},
-//                          {0,1,1,1,1,1}, 
-//                          {1,1,0,1,1,1},
-//                          {1,0,0,1,1,1},
-//                          {1,1,1,1,1,1}
-//                        };
-
-bool board[6][6] := { {1,1,0,0,0,0},
-                      {0,0,0,0,0,0},
-                      {0,0,0,0,0,0}, 
-                      {0,0,0,0,0,0},
-                      {0,0,0,0,0,0},
-                      {0,0,0,0,0,0}
-                    };</declaration>
+    bool board[6][6] := { {1,1,1,1,1,0},
+                          {0,0,1,0,1,1},
+                          {0,1,1,1,1,1}, 
+                          {1,1,0,1,1,1},
+                          {1,0,0,1,1,1},
+                          {1,1,1,1,1,1}
+                        };</declaration>
 	<template>
 		<name x="5" y="5">Car</name>
 		<parameter>int size, int init_x, int init_y, int direction, bool redCar</parameter>
@@ -25,33 +17,39 @@ bool board[6][6] := { {1,1,0,0,0,0},
 
 int forth, back, x_location, y_location;
 
+bool isRedFree(){
+    if(redCar == true &amp;&amp; x_location == 5 &amp;&amp; y_location == 3){
+        return true;
+    }
+    return false;
+}
+
 void move(int direction) {
-    if (direction == 0) {
+    if (direction == 0) { // NORTH
         board[x_location][y_location] := 0; // old trunk location is now empty -&gt; 0 x x 0
         board[x_location][y_location + 2] := 1; // new front location full     -&gt; 0 0 x x
         y_location++; // trunk's location updated
     }
-    if (direction == 1) {
+    if (direction == 1) { // EAST
         board[x_location][y_location] := 0;
         board[x_location + 2][y_location] := 1;
         x_location++;
     }
-    if (direction == 2) {
-        board[x_location][y_location] := 0;
-        board[x_location][y_location - 2] := 1;
+    if (direction == 2) { // SOUTH
+        board[x_location][y_location + 1] := 0;
+        board[x_location][y_location - 1] := 1;
         y_location--;
     }
-    if (direction == 3) {
-        board[x_location][y_location + 1] := 0;
-        board[x_location][y_location] := 1;
-        board[x_location - 2][y_location] := 1;
+    if (direction == 3) { // WEST
+        board[x_location + 1][y_location] := 0;
+        board[x_location - 1][y_location] := 1;
         x_location--;
     }
 }
 
 bool isOpen(int direction) {
     if (direction == 0) { // NORTH
-        if (y_location + 2 &lt;= 6) { // RANGE CHECK
+        if (y_location + 2 &lt;= 5) { // RANGE CHECK
             if (board[x_location][y_location + 2]) {        
                 return false;
             } else {
@@ -61,7 +59,7 @@ bool isOpen(int direction) {
         }
     }
     if (direction == 1) { // EAST
-        if (x_location + 2 &lt;= 6) { // RANGE CHECK
+        if (x_location + 2 &lt;= 5) { // RANGE CHECK
             if (board[x_location + 2][y_location]) {
                 return false;
             } else {
@@ -95,69 +93,100 @@ bool isOpen(int direction) {
 
 void initCar() {
     forth := direction;
-    x_location := x;
-    y_location := y;
+    x_location := init_x;
+    y_location := init_y;
     if (forth &lt;= 1) {
         back := forth + 2;
     } else {
         back := forth - 2;
     }
 }</declaration>
-		<location id="id0" x="-17" y="144">
+		<location id="id0" x="-17" y="-119" color="#00ff00">
+			<name x="-34" y="-153">WIN</name>
 		</location>
-		<location id="id1" x="-272" y="-144">
+		<location id="id1" x="-17" y="144">
+		</location>
+		<location id="id2" x="-272" y="-144">
 			<name x="-323" y="-178">movedBack</name>
 		</location>
-		<location id="id2" x="221" y="-144">
+		<location id="id3" x="221" y="-144">
 			<name x="178" y="-178">movedForth</name>
 		</location>
-		<location id="id3" x="-272" y="0">
+		<location id="id4" x="-272" y="0">
 		</location>
-		<location id="id4" x="221" y="0">
+		<location id="id5" x="221" y="0">
 		</location>
-		<location id="id5" x="-17" y="0">
+		<location id="id6" x="-17" y="0">
 		</location>
-		<init ref="id0"/>
+		<init ref="id1"/>
 		<transition>
-			<source ref="id0"/>
-			<target ref="id5"/>
-			<label kind="assignment" x="-8" y="76">initCar()</label>
-		</transition>
-		<transition>
-			<source ref="id2"/>
-			<target ref="id5"/>
+			<source ref="id6"/>
+			<target ref="id0"/>
+			<label kind="guard" x="-85" y="-85">isRedFree() == true</label>
 		</transition>
 		<transition>
 			<source ref="id1"/>
-			<target ref="id5"/>
+			<target ref="id6"/>
+			<label kind="assignment" x="-8" y="76">initCar()</label>
 		</transition>
 		<transition>
 			<source ref="id3"/>
-			<target ref="id1"/>
-			<label kind="assignment" x="-391" y="-76">move(back)</label>
+			<target ref="id6"/>
+		</transition>
+		<transition>
+			<source ref="id2"/>
+			<target ref="id6"/>
 		</transition>
 		<transition>
 			<source ref="id4"/>
 			<target ref="id2"/>
-			<label kind="assignment" x="229" y="-76">move(forth)</label>
+			<label kind="assignment" x="-391" y="-76">move(back)</label>
 		</transition>
 		<transition>
 			<source ref="id5"/>
 			<target ref="id3"/>
+			<label kind="assignment" x="229" y="-76">move(forth)</label>
+		</transition>
+		<transition>
+			<source ref="id6"/>
+			<target ref="id4"/>
 			<label kind="guard" x="-204" y="8">isOpen(back)</label>
 		</transition>
 		<transition>
-			<source ref="id5"/>
-			<target ref="id4"/>
+			<source ref="id6"/>
+			<target ref="id5"/>
 			<label kind="guard" x="42" y="8">isOpen(forth)</label>
 		</transition>
 	</template>
 	<system>// Place template instantiations here.
-Car0 = Car(2,0,0,0, false);
-//Car1 = Car(2,3,3,1, true);
+Car0 = Car(2,3,3,1, true); // Red car
+Car1 = Car(3,0,0,0, false); // Truck
+Car2 = Car(2,1,0,1, false);
+Car3 = Car(2,4,0,0, false);
+Car4 = Car(2,4,0,1, false);
+Car5 = Car(2,4,1,1, false);
+Car6 = Car(2,1,2,0, false);
+Car7 = Car(2,2,3,0, false); 
+Car8 = Car(2,3,2,1, false);
+Car9 = Car(3,5,2,0, false); // Truck
+Car10 = Car(2,4,4,0, false);
+Car11 = Car(2,2,5,1, false);
+Car12 = Car(2,0,5,1, false);
 // List one or more processes to be composed into a system.
-system Car0;//, Car1;
+system Car0, Car1, Car2, Car3, Car4, Car5, Car6, Car7, Car8, Car9, Car10, Car11, Car12;
     </system>
 	<queries>
+		<query>
+			<formula>E&lt;&gt; Car0.location
+			</formula>
+			<comment>
+			</comment>
+		</query>
+		<query>
+			<formula>E&lt;&gt; not deadlock
+			</formula>
+			<comment>
+			</comment>
+		</query>
 	</queries>
 </nta>
