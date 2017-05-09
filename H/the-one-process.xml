@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE nta PUBLIC '-//Uppaal Team//DTD Flat System 1.1//EN' 'http://www.it.uu.se/research/group/darts/uppaal/flat-1_2.dtd'>
+<nta>
+	<declaration>// Place global declarations here.
+int board[6][6];
+int steps;
+
+void load(int puzzle[6][6]) {
+    board = puzzle;
+}
+
+bool canRedExit(){
+    if(board[3][5] == 1){
+        return true;
+    }
+    else {
+        return false;
+    }
+}
+
+// List of puzzles
+// Red car always has the number 1 and empty spaces are marked with 0
+int puzzle13[6][6] = {  {2,2,3,3,4,0},
+                        {0,0,5,0,4,6},
+                        {0,7,5,1,1,6},
+                        {8,7,0,9,9,6},
+                        {8,0,0,10,11,11},
+                        {8,12,12,10,13,13}};
+
+int puzzle21[6][6] = {  {2,2,3,4,0,0},
+                        {5,0,3,4,0,0},
+                        {5,1,1,4,0,0},
+                        {5,6,6,6,0,0},
+                        {0,0,0,0,0,0},
+                        {0,0,0,7,7,7}};
+
+int puzzleHard1[6][6] = {   {2,2,2,3,4,5},
+                            {6,7,7,3,4,5},
+                            {6,0,1,1,4,5},
+                            {8,8,9,0,0,0},
+                            {0,10,9,0,11,11},
+                            {0,10,12,12,13,13}};
+
+int puzzleHard2[6][6] = {   {0,0,2,3,3,4},
+                            {0,0,2,0,0,4},
+                            {0,0,2,1,1,4},
+                            {0,0,0,5,6,6},
+                            {7,8,8,5,0,0},
+                            {7,0,0,5,9,9}};
+</declaration>
+	<template>
+		<name x="5" y="5">Rush</name>
+		<declaration>// Place local declarations here.</declaration>
+		<location id="id0" x="170" y="-76">
+			<label kind="invariant" x="127" y="-59">move_piece</label>
+		</location>
+		<location id="id1" x="-170" y="-76" color="#00ff00">
+			<name x="-212" y="-85">WIN</name>
+		</location>
+		<location id="id2" x="0" y="-76">
+		</location>
+		<location id="id3" x="0" y="0">
+		</location>
+		<init ref="id3"/>
+		<transition>
+			<source ref="id2"/>
+			<target ref="id0"/>
+			<label kind="guard" x="34" y="-102">!canRedExit()</label>
+		</transition>
+		<transition>
+			<source ref="id2"/>
+			<target ref="id1"/>
+			<label kind="guard" x="-127" y="-102">canRedExit()</label>
+		</transition>
+		<transition>
+			<source ref="id3"/>
+			<target ref="id2"/>
+			<label kind="assignment" x="8" y="-42">load(puzzle13)</label>
+		</transition>
+	</template>
+	<system>// Place template instantiations here.
+Process = Rush();
+// List one or more processes to be composed into a system.
+system Process;
+    </system>
+	<queries>
+	</queries>
+</nta>
