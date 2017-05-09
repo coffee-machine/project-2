@@ -62,7 +62,7 @@ bool isOpen(int direction) {
         }
     }
     if (direction == 2) { // SOUTH
-        if (y_location - (size - 1) &gt;= 0) { // RANGE CHECK
+        if (y_location - 1 &gt;= 0) { // RANGE CHECK
             if (board[x_location][y_location - 1]) {
                 return false;
             } else {
@@ -72,7 +72,7 @@ bool isOpen(int direction) {
         }
     }
     if (direction == 3) { // WEST
-        if (x_location - (size - 1) &gt;= 0) { // RANGE CHECK
+        if (x_location - 1 &gt;= 0) { // RANGE CHECK
             if (board[x_location - 1][y_location]) {
                 return false;
             } else {
@@ -167,8 +167,16 @@ Car11 = Car(2, 2,5, 1, false);
 Car12 = Car(2, 0,5, 1, false);
 // List one or more processes to be composed into a system.
 system Car0, Car1, Car2, Car3, Car4, Car5, Car6, Car7, Car8, Car9, Car10, Car11, Car12;
-    </system>
+
+
+//system Car0, Car1, Car2, Car5, Car6, Car7, Car8, Car9, Car10, Car11, Car12;    </system>
 	<queries>
+		<query>
+			<formula>E&lt;&gt; Car0.x_location == 3
+			</formula>
+			<comment>
+			</comment>
+		</query>
 		<query>
 			<formula>E&lt;&gt; Car0.x_location == 4
 			</formula>
