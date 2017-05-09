@@ -12,7 +12,9 @@
 
 int steps;
 
-clock truck_time;</declaration>
+clock time;
+
+bool anybody_can_move := true;</declaration>
 	<template>
 		<name x="5" y="5">Car</name>
 		<parameter>int size, int init_x, int init_y, int direction, bool redCar</parameter>
@@ -20,6 +22,8 @@ clock truck_time;</declaration>
 // We assume car's x and y coordinates to be the location of its trunk.
 
 int forth, back, x_location, y_location;
+
+clock vehicle_time;
 
 void move(int direction) {
     if (direction == 0) { // NORTH
@@ -125,115 +129,140 @@ void initCar() {
         }
     }
 }</declaration>
-		<location id="id0" x="221" y="153">
-			<label kind="invariant" x="178" y="170">truck_time &lt;= 5</label>
+		<location id="id0" x="408" y="76">
+		</location>
+		<location id="id1" x="416" y="-76">
+		</location>
+		<location id="id2" x="-450" y="76">
+		</location>
+		<location id="id3" x="-467" y="-59">
+		</location>
+		<location id="id4" x="340" y="153">
+			<name x="280" y="170">truckHasMovedForth</name>
+		</location>
+		<location id="id5" x="-382" y="153">
+			<name x="-441" y="170">truckHasMovedBack</name>
+		</location>
+		<location id="id6" x="-17" y="144">
 			<committed/>
 		</location>
-		<location id="id1" x="-272" y="153">
-			<label kind="invariant" x="-323" y="170">truck_time &lt;= 5</label>
+		<location id="id7" x="-382" y="-144">
+			<name x="-441" y="-195">carHasMovedBack</name>
+		</location>
+		<location id="id8" x="340" y="-153">
+			<name x="280" y="-204">carHasMovedForth</name>
+		</location>
+		<location id="id9" x="-382" y="0">
 			<committed/>
 		</location>
-		<location id="id2" x="-17" y="144">
+		<location id="id10" x="340" y="0">
 			<committed/>
 		</location>
-		<location id="id3" x="-272" y="-144">
-			<name x="-323" y="-178">movedBack</name>
-			<committed/>
-		</location>
-		<location id="id4" x="221" y="-144">
-			<name x="178" y="-178">movedForth</name>
-			<committed/>
-		</location>
-		<location id="id5" x="-272" y="0">
-			<committed/>
-		</location>
-		<location id="id6" x="221" y="0">
-			<committed/>
-		</location>
-		<location id="id7" x="-17" y="0">
+		<location id="id11" x="-17" y="0">
 			<name x="-34" y="-34">WAIT</name>
 		</location>
-		<init ref="id2"/>
+		<init ref="id6"/>
 		<transition>
 			<source ref="id0"/>
-			<target ref="id7"/>
+			<target ref="id4"/>
+			<label kind="guard" x="382" y="102">vehicle_time == 5</label>
+			<label kind="assignment" x="374" y="119">move(forth)</label>
+		</transition>
+		<transition>
+			<source ref="id10"/>
+			<target ref="id0"/>
+			<label kind="guard" x="374" y="17">size == 3</label>
 		</transition>
 		<transition>
 			<source ref="id1"/>
-			<target ref="id7"/>
+			<target ref="id8"/>
+			<label kind="guard" x="374" y="-144">vehicle_time == 2</label>
+			<label kind="assignment" x="391" y="-127">move(forth)</label>
 		</transition>
 		<transition>
-			<source ref="id6"/>
-			<target ref="id0"/>
-			<label kind="guard" x="229" y="68">size == 3</label>
-			<label kind="assignment" x="229" y="85">move(forth)</label>
-			<nail x="221" y="68"/>
-		</transition>
-		<transition>
-			<source ref="id5"/>
+			<source ref="id10"/>
 			<target ref="id1"/>
-			<label kind="guard" x="-348" y="59">size == 3</label>
-			<label kind="assignment" x="-357" y="76">move(back)</label>
-			<nail x="-272" y="68"/>
+			<label kind="guard" x="374" y="-34">size != 3</label>
 		</transition>
 		<transition>
 			<source ref="id2"/>
-			<target ref="id7"/>
-			<label kind="assignment" x="-8" y="76">initCar()</label>
-		</transition>
-		<transition>
-			<source ref="id4"/>
-			<target ref="id7"/>
+			<target ref="id5"/>
+			<label kind="guard" x="-544" y="110">vehicle_time == 5</label>
+			<label kind="assignment" x="-501" y="127">move(back)</label>
 		</transition>
 		<transition>
 			<source ref="id3"/>
 			<target ref="id7"/>
+			<label kind="guard" x="-552" y="-127">vehicle_time == 2</label>
+			<label kind="assignment" x="-518" y="-110">move(back)</label>
+		</transition>
+		<transition>
+			<source ref="id4"/>
+			<target ref="id11"/>
+			<label kind="assignment" x="17" y="136">vehicle_time := 0, anybody_can_move := true</label>
 		</transition>
 		<transition>
 			<source ref="id5"/>
-			<target ref="id3"/>
-			<label kind="guard" x="-340" y="-93">size != 3</label>
-			<label kind="assignment" x="-357" y="-76">move(back)</label>
+			<target ref="id11"/>
+			<label kind="assignment" x="-348" y="136">vehicle_time := 0, anybody_can_move := true</label>
+		</transition>
+		<transition>
+			<source ref="id9"/>
+			<target ref="id2"/>
+			<label kind="guard" x="-493" y="25">size == 3</label>
 		</transition>
 		<transition>
 			<source ref="id6"/>
-			<target ref="id4"/>
-			<label kind="guard" x="229" y="-93">size != 3</label>
-			<label kind="assignment" x="229" y="-76">move(forth)</label>
+			<target ref="id11"/>
+			<label kind="assignment" x="-17" y="59">initCar()</label>
+		</transition>
+		<transition>
+			<source ref="id8"/>
+			<target ref="id11"/>
+			<label kind="assignment" x="0" y="-153">vehicle_time := 0, anybody_can_move := true</label>
 		</transition>
 		<transition>
 			<source ref="id7"/>
-			<target ref="id5"/>
-			<label kind="guard" x="-204" y="8">isOpen(back)</label>
+			<target ref="id11"/>
+			<label kind="assignment" x="-340" y="-153">vehicle_time := 0, anybody_can_move := true</label>
 		</transition>
 		<transition>
-			<source ref="id7"/>
-			<target ref="id6"/>
-			<label kind="guard" x="42" y="8">isOpen(forth)</label>
+			<source ref="id9"/>
+			<target ref="id3"/>
+			<label kind="guard" x="-484" y="-25">size != 3</label>
+		</transition>
+		<transition>
+			<source ref="id11"/>
+			<target ref="id9"/>
+			<label kind="guard" x="-340" y="0">isOpen(back) &amp;&amp; anybody_can_move</label>
+			<label kind="assignment" x="-314" y="-17">anybody_can_move := false</label>
+		</transition>
+		<transition>
+			<source ref="id11"/>
+			<target ref="id10"/>
+			<label kind="guard" x="42" y="0">isOpen(forth) &amp;&amp; anybody_can_move</label>
+			<label kind="assignment" x="93" y="-17">anybody_can_move := false</label>
 		</transition>
 	</template>
 	<system>// Place template instantiations here.
 
 
-//\b THE HARDEST POSITION - SYSTEM DECLARATIONS
-//\b0 \
 // Place template instantiations here.\
-Car0 =  Car(2, 2,3, 1, true);  // Red car\
-Car1 =  Car(3, 0,5, 1, false); // Truck no. 13\
-Car2 =  Car(2, 0,3, 0, false); // Car no. 1\
-Car3 =  Car(2, 1,4, 1, false); // Car no. 14\
-Car4 =  Car(2, 3,4, 0, false); // Car no. 4\
-Car5 =  Car(3, 4,3, 0, false); // Truck no. 5\
-Car6 =  Car(3, 5,3, 0, false); // Truck no. 6\
-Car7 =  Car(2, 0,2, 1, false); // Car no. 16\
-Car8 =  Car(2, 1,0, 0, false); // Car no. 2\
-Car9 =  Car(2, 2,1, 0, false); // Car no. 3\
-Car10 = Car(2, 2,0, 1, false); // Car no. 18\
-Car11 = Car(2, 4,1, 1, false); // Car no. 17\
-Car12 = Car(2, 4,0, 1, false); // Car no. 24\
+Car0 =  Car(2, 3,3, 1, true); // Red car\
+Car1 =  Car(3, 0,0, 0, false); // Truck\
+Car2 =  Car(2, 1,0, 1, false);\
+Car3 =  Car(2, 4,0, 1, false);\
+Car4 =  Car(2, 4,1, 1, false);\
+Car5 =  Car(2, 3,0, 0, false);\
+Car6 =  Car(2, 1,2, 0, false);\
+Car7 =  Car(2, 2,3, 0, false); \
+Car8 =  Car(2, 3,2, 1, false);\
+Car9 =  Car(3, 5,2, 0, false); // Truck\
+Car10 = Car(2, 4,4, 0, false);\
+Car11 = Car(2, 2,5, 1, false);\
+Car12 = Car(2, 0,5, 1, false);\
 // List one or more processes to be composed into a system.\
-system Car0, Car1, Car2, Car3, Car4, Car5, Car6, Car7, Car8, Car9, Car10, Car11, Car12;
-</system>
+system Car0, Car1, Car2, Car3, Car4, Car5, Car6, Car7, Car8, Car9, Car10, Car11, Car12;</system>
 	<queries>
 		<query>
 			<formula>E&lt;&gt; Car0.x_location == 4
