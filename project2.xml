@@ -29,12 +29,12 @@ void move(int direction) {
         x_location++;
     }
     if (direction == 2) { // SOUTH
-        board[x_location][y_location + 1] := 0;
+        board[x_location][y_location + (size - 1)] := 0;
         board[x_location][y_location - 1] := 1;
         y_location--;
     }
     if (direction == 3) { // WEST
-        board[x_location + 1][y_location] := 0;
+        board[x_location + (size - 1)][y_location] := 0;
         board[x_location - 1][y_location] := 1;
         x_location--;
     }
@@ -43,7 +43,7 @@ void move(int direction) {
 bool isOpen(int direction) {
     if (direction == 0) { // NORTH
         if (y_location + size &lt;= 5) { // RANGE CHECK
-            if (board[x_location][y_location + 2]) {        
+            if (board[x_location][y_location + size]) {        
                 return false;
             } else {
                 return true;
@@ -53,7 +53,7 @@ bool isOpen(int direction) {
     }
     if (direction == 1) { // EAST
         if (x_location + size &lt;= 5) { // RANGE CHECK
-            if (board[x_location + 2][y_location]) {
+            if (board[x_location + size][y_location]) {
                 return false;
             } else {
                 return true;
@@ -62,7 +62,7 @@ bool isOpen(int direction) {
         }
     }
     if (direction == 2) { // SOUTH
-        if (y_location - 1 &gt;= 0) { // RANGE CHECK
+        if (y_location - (size - 1) &gt;= 0) { // RANGE CHECK
             if (board[x_location][y_location - 1]) {
                 return false;
             } else {
@@ -72,7 +72,7 @@ bool isOpen(int direction) {
         }
     }
     if (direction == 3) { // WEST
-        if (x_location - 1 &gt;= 0) { // RANGE CHECK
+        if (x_location - (size - 1) &gt;= 0) { // RANGE CHECK
             if (board[x_location - 1][y_location]) {
                 return false;
             } else {
@@ -89,22 +89,15 @@ void initCar() {
     x_location := init_x;
     y_location := init_y;
     if (forth &lt;= 1) {
-        if(size == 2){ // Car
-            back := forth + 2;
-        }
-        else if(size == 3){ // Truck
-            back := forth + 3;
-        }
+        back := forth + 2; // If forth direction is north (0), then back is south (2) etc.
+    } else if (forth == 2) {
+        back := forth + 1;
     } else {
-        if(size == 2){ // Car
-            back := forth - 2;
-        }
-        else if(size == 3){ // Truck
-            back := forth - 3;
-        }
+        back := 0;
     }
 }</declaration>
 		<location id="id0" x="-17" y="144">
+			<committed/>
 		</location>
 		<location id="id1" x="-272" y="-144">
 			<name x="-323" y="-178">movedBack</name>
@@ -177,7 +170,7 @@ system Car0, Car1, Car2, Car3, Car4, Car5, Car6, Car7, Car8, Car9, Car10, Car11,
     </system>
 	<queries>
 		<query>
-			<formula>E&lt;&gt; Car0.x_location == 5
+			<formula>E&lt;&gt; Car0.x_location == 4
 			</formula>
 			<comment>
 			</comment>
