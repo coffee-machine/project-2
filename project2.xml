@@ -2,13 +2,15 @@
 <!DOCTYPE nta PUBLIC '-//Uppaal Team//DTD Flat System 1.1//EN' 'http://www.it.uu.se/research/group/darts/uppaal/flat-1_2.dtd'>
 <nta>
 	<declaration>// Place global declarations here.
-    bool board[6][6] := { {1,1,1,0,0,1},
-                          {1,0,1,1,0,1},
-                          {1,0,0,1,1,1}, 
-                          {1,1,1,1,0,1},
-                          {1,1,1,1,1,1},
-                          {1,1,1,1,1,0}
-                        };</declaration>
+    bool board[6][6] := { {0,0,0,0,0,0},
+                          {0,0,0,0,0,0},
+                          {0,0,0,0,0,0}, 
+                          {0,0,0,0,0,0},
+                          {0,0,0,0,0,0},
+                          {0,0,0,0,0,0}
+                        };
+
+int steps;</declaration>
 	<template>
 		<name x="5" y="5">Car</name>
 		<parameter>int size, int init_x, int init_y, int direction, bool redCar</parameter>
@@ -38,6 +40,7 @@ void move(int direction) {
         board[x_location - 1][y_location] := 1;
         x_location--;
     }
+    steps++;
 }
 
 bool isOpen(int direction) {
@@ -94,6 +97,30 @@ void initCar() {
         back := forth + 1;
     } else {
         back := 0;
+    }
+    if (direction == 0) {
+        int i;
+        for (i = 0; i &lt; size; i++) {
+            board[x_location][y_location + i] := 1;
+        }
+    }
+    if (direction == 1) {
+        int i;
+        for (i = 0; i &lt; size; i++) {
+            board[x_location + i][y_location] := 1;
+        }        
+    }
+    if (direction == 2) {
+        int i;
+        for (i = 0; i &lt; size; i++) {
+            board[x_location][y_location - i] := 1;
+        }
+    }
+    if (direction == 3) {
+        int i;
+        for (i = 0; i &lt; size; i++) {
+            board[x_location + i][y_location] := 1;
+        }
     }
 }</declaration>
 		<location id="id0" x="-17" y="144">
@@ -152,31 +179,28 @@ void initCar() {
 		</transition>
 	</template>
 	<system>// Place template instantiations here.
-Car0 =  Car(2, 3,3, 1, true); // Red car
-Car1 =  Car(3, 0,0, 0, false); // Truck
-Car2 =  Car(2, 1,0, 1, false);
-Car3 =  Car(2, 4,0, 1, false);
-Car4 =  Car(2, 4,1, 1, false);
-Car5 =  Car(2, 3,0, 0, false);
-Car6 =  Car(2, 1,2, 0, false);
-Car7 =  Car(2, 2,3, 0, false); 
-Car8 =  Car(2, 3,2, 1, false);
-Car9 =  Car(3, 5,2, 0, false); // Truck
-Car10 = Car(2, 4,4, 0, false);
-Car11 = Car(2, 2,5, 1, false);
-Car12 = Car(2, 0,5, 1, false);
-// List one or more processes to be composed into a system.
+
+
+//\b THE HARDEST POSITION - SYSTEM DECLARATIONS
+//\b0 \
+// Place template instantiations here.\
+Car0 =  Car(2, 2,3, 1, true);  // Red car\
+Car1 =  Car(3, 0,5, 1, false); // Truck no. 13\
+Car2 =  Car(2, 0,3, 0, false); // Car no. 1\
+Car3 =  Car(2, 1,4, 1, false); // Car no. 14\
+Car4 =  Car(2, 3,4, 0, false); // Car no. 4\
+Car5 =  Car(3, 4,3, 0, false); // Truck no. 5\
+Car6 =  Car(3, 5,3, 0, false); // Truck no. 6\
+Car7 =  Car(2, 0,2, 1, false); // Car no. 16\
+Car8 =  Car(2, 1,0, 0, false); // Car no. 2\
+Car9 =  Car(2, 2,1, 0, false); // Car no. 3\
+Car10 = Car(2, 2,0, 1, false); // Car no. 18\
+Car11 = Car(2, 4,1, 1, false); // Car no. 17\
+Car12 = Car(2, 4,0, 1, false); // Car no. 24\
+// List one or more processes to be composed into a system.\
 system Car0, Car1, Car2, Car3, Car4, Car5, Car6, Car7, Car8, Car9, Car10, Car11, Car12;
-
-
-//system Car0, Car1, Car2, Car5, Car6, Car7, Car8, Car9, Car10, Car11, Car12;    </system>
+</system>
 	<queries>
-		<query>
-			<formula>E&lt;&gt; Car0.x_location == 3
-			</formula>
-			<comment>
-			</comment>
-		</query>
 		<query>
 			<formula>E&lt;&gt; Car0.x_location == 4
 			</formula>
