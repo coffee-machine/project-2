@@ -89,24 +89,39 @@ void initCar() {
     x_location := init_x;
     y_location := init_y;
     if (forth &lt;= 1) {
-        back := forth + 2;
+        if(size == 2){ // Car
+            back := forth + 2;
+        }
+        else if(size == 3){ // Truck
+            back := forth + 3;
+        }
     } else {
-        back := forth - 2;
+        if(size == 2){ // Car
+            back := forth - 2;
+        }
+        else if(size == 3){ // Truck
+            back := forth - 3;
+        }
     }
 }</declaration>
 		<location id="id0" x="-17" y="144">
 		</location>
 		<location id="id1" x="-272" y="-144">
 			<name x="-323" y="-178">movedBack</name>
+			<committed/>
 		</location>
 		<location id="id2" x="221" y="-144">
 			<name x="178" y="-178">movedForth</name>
+			<committed/>
 		</location>
 		<location id="id3" x="-272" y="0">
+			<committed/>
 		</location>
 		<location id="id4" x="221" y="0">
+			<committed/>
 		</location>
 		<location id="id5" x="-17" y="0">
+			<name x="-34" y="-34">WAIT</name>
 		</location>
 		<init ref="id0"/>
 		<transition>
@@ -125,7 +140,7 @@ void initCar() {
 		<transition>
 			<source ref="id3"/>
 			<target ref="id1"/>
-			<label kind="assignment" x="-391" y="-76">move(back)</label>
+			<label kind="assignment" x="-365" y="-76">move(back)</label>
 		</transition>
 		<transition>
 			<source ref="id4"/>
