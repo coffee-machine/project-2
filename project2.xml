@@ -88,9 +88,9 @@ bool isOpen(int direction) {
 }
 
 void initCar() {
-    forth := direction;
-    x_location := init_x;
-    y_location := init_y;
+    forth := direction; // Setting direction
+    x_location := init_x; // Setting the initial direction
+    y_location := init_y; // Setting the initial direction
     if (forth &lt;= 1) {
         back := forth + 2; // If forth direction is north (0), then back is south (2) etc.
     } else if (forth == 2) {
@@ -98,25 +98,27 @@ void initCar() {
     } else {
         back := 0;
     }
-    if (direction == 0) {
+
+    // Initializing cars and trucks
+    if (direction == 0) { // NORTH
         int i;
         for (i = 0; i &lt; size; i++) {
             board[x_location][y_location + i] := 1;
         }
     }
-    if (direction == 1) {
+    if (direction == 1) { // EAST
         int i;
         for (i = 0; i &lt; size; i++) {
             board[x_location + i][y_location] := 1;
         }        
     }
-    if (direction == 2) {
+    if (direction == 2) { // SOUTH
         int i;
         for (i = 0; i &lt; size; i++) {
             board[x_location][y_location - i] := 1;
         }
     }
-    if (direction == 3) {
+    if (direction == 3) { // WEST
         int i;
         for (i = 0; i &lt; size; i++) {
             board[x_location + i][y_location] := 1;
