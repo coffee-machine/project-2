@@ -1,4 +1,4 @@
-// Hardest2
+// Advanced
 game = Game(7);
 veh1 = Vehicle(0,5,1,2);
 veh2 = Vehicle(2,4,0,2);
