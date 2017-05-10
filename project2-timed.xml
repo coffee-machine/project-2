@@ -11,9 +11,7 @@
                         };
 
 int steps;
-
 clock time;
-
 bool anybody_can_move := true;</declaration>
 	<template>
 		<name x="5" y="5">Car</name>
@@ -234,14 +232,14 @@ void initCar() {
 		<transition>
 			<source ref="id11"/>
 			<target ref="id9"/>
-			<label kind="guard" x="-340" y="0">isOpen(back) &amp;&amp; anybody_can_move</label>
-			<label kind="assignment" x="-314" y="-17">anybody_can_move := false</label>
+			<label kind="guard" x="-348" y="0">isOpen(back) &amp;&amp; anybody_can_move</label>
+			<label kind="assignment" x="-365" y="-17">anybody_can_move := false, vehicle_time := 0</label>
 		</transition>
 		<transition>
 			<source ref="id11"/>
 			<target ref="id10"/>
 			<label kind="guard" x="42" y="0">isOpen(forth) &amp;&amp; anybody_can_move</label>
-			<label kind="assignment" x="93" y="-17">anybody_can_move := false</label>
+			<label kind="assignment" x="17" y="-17">anybody_can_move := false, vehicle_time := 0</label>
 		</transition>
 	</template>
 	<system>// Place template instantiations here.
