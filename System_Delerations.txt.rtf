@@ -5,14 +5,6 @@
 \paperw11900\paperh16840\margl1440\margr1440\vieww14980\viewh10940\viewkind0
 \pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural\partightenfactor0
 
-bool board[6][6] := { {1,1,1,0,0,1},
-                      {1,0,1,1,0,1},
-                      {1,0,0,1,1,1}, 
-                      {1,1,1,1,0,1},
-                      {1,1,1,1,1,1},
-                      {1,1,1,1,1,0}
-                    };
-
 \f0\b\fs24 \cf0 INTERMEDIATE - SYSTEM DECLARATIONS 
 \b0 \
 // Place template instantiations here.\
@@ -32,6 +24,9 @@ Car12 = Car(2, 0,5, 1, false);\
 // List one or more processes to be composed into a system.\
 system Car0, Car1, Car2, Car3, Car4, Car5, Car6, Car7, Car8, Car9, Car10, Car11, Car12;\
     \
+Steps = 32\
+Time units = 76\
+\
 \
 
 \b ADVANCED - SYSTEM DECLARATIONS\
@@ -46,6 +41,9 @@ Car5 =  Car(3, 1,2, 1, false); // Blue Truck\
 Car6 =  Car(3, 3,0, 1, false); // Green Truck\
 // List one or more processes to be composed into a system.\
 system Car0, Car1, Car2, Car3, Car4, Car5, Car6;\
+\
+Steps = 49\
+Time units = 188\
 \
 \
 
@@ -67,5 +65,8 @@ Car11 = Car(2, 4,1, 1, false); // Car no. 17\
 Car12 = Car(2, 4,0, 1, false); // Car no. 24\
 // List one or more processes to be composed into a system.\
 system Car0, Car1, Car2, Car3, Car4, Car5, Car6, Car7, Car8, Car9, Car10, Car11, Car12;\
+\
+Steps = 93\
+Time units = 240\
  \
  }
