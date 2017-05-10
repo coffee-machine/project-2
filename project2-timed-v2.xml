@@ -135,77 +135,63 @@ void initCar() {
         }
     }
 }</declaration>
-		<location id="id0" x="416" y="-59">
-		</location>
-		<location id="id1" x="-467" y="-68">
-		</location>
-		<location id="id2" x="-25" y="119">
+		<location id="id0" x="-25" y="119">
 			<committed/>
 		</location>
-		<location id="id3" x="-382" y="-153">
+		<location id="id1" x="-382" y="-153">
 			<name x="-442" y="-187">carHasMovedBack</name>
 			<label kind="invariant" x="-442" y="-204">vehicle_time &lt;= this_time</label>
 		</location>
-		<location id="id4" x="331" y="-153">
+		<location id="id2" x="331" y="-153">
 			<name x="271" y="-187">carHasMovedForth</name>
 			<label kind="invariant" x="272" y="-204">vehicle_time &lt;= this_time</label>
 		</location>
-		<location id="id5" x="-382" y="0">
-			<committed/>
+		<location id="id3" x="-382" y="0">
 		</location>
-		<location id="id6" x="331" y="0">
-			<committed/>
+		<location id="id4" x="331" y="0">
 		</location>
-		<location id="id7" x="-25" y="0">
+		<location id="id5" x="-25" y="0">
 			<name x="-42" y="-42">WAIT</name>
 		</location>
-		<init ref="id2"/>
+		<init ref="id0"/>
 		<transition>
-			<source ref="id0"/>
-			<target ref="id4"/>
+			<source ref="id4"/>
+			<target ref="id2"/>
 			<label kind="guard" x="365" y="-136">vehicle_time == this_time</label>
 			<label kind="assignment" x="382" y="-119">move(forth)</label>
 		</transition>
 		<transition>
-			<source ref="id6"/>
-			<target ref="id0"/>
-		</transition>
-		<transition>
-			<source ref="id1"/>
-			<target ref="id3"/>
+			<source ref="id3"/>
+			<target ref="id1"/>
 			<label kind="guard" x="-595" y="-136">vehicle_time == this_time</label>
 			<label kind="assignment" x="-552" y="-119">move(back)</label>
 		</transition>
 		<transition>
-			<source ref="id2"/>
-			<target ref="id7"/>
+			<source ref="id0"/>
+			<target ref="id5"/>
 			<label kind="assignment" x="-85" y="59">initCar()</label>
 		</transition>
 		<transition>
-			<source ref="id4"/>
-			<target ref="id7"/>
+			<source ref="id2"/>
+			<target ref="id5"/>
 			<label kind="assignment" x="0" y="-161">vehicle_time := 0, anybody_can_move := true</label>
 			<nail x="136" y="-102"/>
 		</transition>
 		<transition>
-			<source ref="id3"/>
-			<target ref="id7"/>
+			<source ref="id1"/>
+			<target ref="id5"/>
 			<label kind="assignment" x="-340" y="-161">vehicle_time := 0, anybody_can_move := true</label>
 			<nail x="-187" y="-110"/>
 		</transition>
 		<transition>
 			<source ref="id5"/>
-			<target ref="id1"/>
-		</transition>
-		<transition>
-			<source ref="id7"/>
-			<target ref="id5"/>
+			<target ref="id3"/>
 			<label kind="guard" x="-348" y="0">isOpen(back) &amp;&amp; anybody_can_move</label>
 			<label kind="assignment" x="-365" y="-17">anybody_can_move := false, vehicle_time := 0</label>
 		</transition>
 		<transition>
-			<source ref="id7"/>
-			<target ref="id6"/>
+			<source ref="id5"/>
+			<target ref="id4"/>
 			<label kind="guard" x="34" y="0">isOpen(forth) &amp;&amp; anybody_can_move</label>
 			<label kind="assignment" x="0" y="-17">anybody_can_move := false, vehicle_time := 0</label>
 		</transition>
