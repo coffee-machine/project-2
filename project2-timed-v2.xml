@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE nta PUBLIC '-//Uppaal Team//DTD Flat System 1.1//EN' 'http://www.it.uu.se/research/group/darts/uppaal/flat-1_2.dtd'>
+<nta>
+	<declaration>// Place global declarations here.
+    bool board[6][6] := { {0,0,0,0,0,0},
+                          {0,0,0,0,0,0},
+                          {0,0,0,0,0,0}, 
+                          {0,0,0,0,0,0},
+                          {0,0,0,0,0,0},
+                          {0,0,0,0,0,0}
+                        };
+
+int steps;
+clock time;
+bool anybody_can_move := true;</declaration>
+	<template>
+		<name x="5" y="5">Car</name>
+		<parameter>int size, int init_x, int init_y, int direction, bool redCar</parameter>
+		<declaration>// NOTE ON CAR:
+// We assume car's x and y coordinates to be the location of its trunk.
+
+int forth, back, x_location, y_location, this_time;
+
+clock vehicle_time;
+
+void move(int direction) {
+    if (direction == 0) { // NORTH
+        board[x_location][y_location] := 0; // old trunk location is now empty -&gt; 0 x x 0
+        board[x_location][y_location + size] := 1; // new front location full     -&gt; 0 0 x x
+        y_location++; // trunk's location updated
+    }
+    if (direction == 1) { // EAST
+        board[x_location][y_location] := 0;
+        board[x_location + size][y_location] := 1;
+        x_location++;
+    }
+    if (direction == 2) { // SOUTH
+        board[x_location][y_location + (size - 1)] := 0;
+        board[x_location][y_location - 1] := 1;
+        y_location--;
+    }
+    if (direction == 3) { // WEST
+        board[x_location + (size - 1)][y_location] := 0;
+        board[x_location - 1][y_location] := 1;
+        x_location--;
+    }
+    steps++;
+}
+
+bool isOpen(int direction) {
+    if (direction == 0) { // NORTH
+        if (y_location + size &lt;= 5) { // RANGE CHECK
+            if (board[x_location][y_location + size]) {        
+                return false;
+            } else {
+                return true;
+            }
+            return false;
+        }
+    }
+    if (direction == 1) { // EAST
+        if (x_location + size &lt;= 5) { // RANGE CHECK
+            if (board[x_location + size][y_location]) {
+                return false;
+            } else {
+                return true;
+            }
+            return false;
+        }
+    }
+    if (direction == 2) { // SOUTH
+        if (y_location - 1 &gt;= 0) { // RANGE CHECK
+            if (board[x_location][y_location - 1]) {
+                return false;
+            } else {
+                return true;
+            }
+            return false;
+        }
+    }
+    if (direction == 3) { // WEST
+        if (x_location - 1 &gt;= 0) { // RANGE CHECK
+            if (board[x_location - 1][y_location]) {
+                return false;
+            } else {
+                return true;
+            }
+            return false;
+        }
+    }
+    return false;
+}
+
+void initCar() {
+    forth := direction;
+    x_location := init_x;
+    y_location := init_y;
+    if (forth &lt;= 1) {
+        back := forth + 2; // If forth direction is north (0), then back is south (2) etc.
+    } else if (forth == 2) {
+        back := forth + 1;
+    } else {
+        back := 0;
+    }
+
+    // Setting vehicles's time settings to reflect whether it is a car or truck
+    if (size == 2) { // This is a car
+        this_time := 2;
+    } else { // This is a truck
+        this_time := 5;
+    }    
+
+    if (direction == 0) {
+        int i;
+        for (i = 0; i &lt; size; i++) {
+            board[x_location][y_location + i] := 1;
+        }
+    }
+    if (direction == 1) {
+        int i;
+        for (i = 0; i &lt; size; i++) {
+            board[x_location + i][y_location] := 1;
+        }        
+    }
+    if (direction == 2) {
+        int i;
+        for (i = 0; i &lt; size; i++) {
+            board[x_location][y_location - i] := 1;
+        }
+    }
+    if (direction == 3) {
+        int i;
+        for (i = 0; i &lt; size; i++) {
+            board[x_location + i][y_location] := 1;
+        }
+    }
+}</declaration>
+		<location id="id0" x="-25" y="119">
+			<committed/>
+		</location>
+		<location id="id1" x="-382" y="-153">
+			<name x="-442" y="-187">carHasMovedBack</name>
+			<label kind="invariant" x="-442" y="-204">vehicle_time &lt;= this_time</label>
+		</location>
+		<location id="id2" x="331" y="-153">
+			<name x="271" y="-187">carHasMovedForth</name>
+			<label kind="invariant" x="272" y="-204">vehicle_time &lt;= this_time</label>
+		</location>
+		<location id="id3" x="-382" y="0">
+		</location>
+		<location id="id4" x="331" y="0">
+		</location>
+		<location id="id5" x="-25" y="0">
+			<name x="-42" y="-42">WAIT</name>
+		</location>
+		<init ref="id0"/>
+		<transition>
+			<source ref="id4"/>
+			<target ref="id2"/>
+			<label kind="guard" x="365" y="-136">vehicle_time == this_time</label>
+			<label kind="assignment" x="382" y="-119">move(forth)</label>
+		</transition>
+		<transition>
+			<source ref="id3"/>
+			<target ref="id1"/>
+			<label kind="guard" x="-595" y="-136">vehicle_time == this_time</label>
+			<label kind="assignment" x="-552" y="-119">move(back)</label>
+		</transition>
+		<transition>
+			<source ref="id0"/>
+			<target ref="id5"/>
+			<label kind="assignment" x="-85" y="59">initCar()</label>
+		</transition>
+		<transition>
+			<source ref="id2"/>
+			<target ref="id5"/>
+			<label kind="assignment" x="0" y="-161">vehicle_time := 0, anybody_can_move := true</label>
+			<nail x="136" y="-102"/>
+		</transition>
+		<transition>
+			<source ref="id1"/>
+			<target ref="id5"/>
+			<label kind="assignment" x="-340" y="-161">vehicle_time := 0, anybody_can_move := true</label>
+			<nail x="-187" y="-110"/>
+		</transition>
+		<transition>
+			<source ref="id5"/>
+			<target ref="id3"/>
+			<label kind="guard" x="-348" y="0">isOpen(back) &amp;&amp; anybody_can_move</label>
+			<label kind="assignment" x="-365" y="-17">anybody_can_move := false, vehicle_time := 0</label>
+		</transition>
+		<transition>
+			<source ref="id5"/>
+			<target ref="id4"/>
+			<label kind="guard" x="34" y="0">isOpen(forth) &amp;&amp; anybody_can_move</label>
+			<label kind="assignment" x="0" y="-17">anybody_can_move := false, vehicle_time := 0</label>
+		</transition>
+	</template>
+	<system>// Place template instantiations here.
+Car0 =  Car(2, 2,3, 1, true);  // Red car
+Car1 =  Car(3, 0,5, 1, false); // Truck no. 13
+Car2 =  Car(2, 0,3, 0, false); // Car no. 1
+Car3 =  Car(2, 1,4, 1, false); // Car no. 14
+Car4 =  Car(2, 3,4, 0, false); // Car no. 4
+Car5 =  Car(3, 4,3, 0, false); // Truck no. 5
+Car6 =  Car(3, 5,3, 0, false); // Truck no. 6
+Car7 =  Car(2, 0,2, 1, false); // Car no. 16
+Car8 =  Car(2, 1,0, 0, false); // Car no. 2
+Car9 =  Car(2, 2,1, 0, false); // Car no. 3
+Car10 = Car(2, 2,0, 1, false); // Car no. 18
+Car11 = Car(2, 4,1, 1, false); // Car no. 17
+Car12 = Car(2, 4,0, 1, false); // Car no. 24
+// List one or more processes to be composed into a system.
+system Car0, Car1, Car2, Car3, Car4, Car5, Car6, Car7, Car8, Car9, Car10, Car11, Car12;</system>
+	<queries>
+		<query>
+			<formula>E&lt;&gt; Car0.x_location == 4
+			</formula>
+			<comment>
+			</comment>
+		</query>
+		<query>
+			<formula>E&lt;&gt; not deadlock
+			</formula>
+			<comment>
+			</comment>
+		</query>
+	</queries>
+</nta>
