@@ -112,18 +112,6 @@ void initCar() {
             board[x_location + i][y_location] := 1;
         }        
     }
-    if (direction == 2) { // SOUTH
-        int i;
-        for (i = 0; i &lt; size; i++) {
-            board[x_location][y_location - i] := 1;
-        }
-    }
-    if (direction == 3) { // WEST
-        int i;
-        for (i = 0; i &lt; size; i++) {
-            board[x_location + i][y_location] := 1;
-        }
-    }
 }</declaration>
 		<location id="id0" x="-17" y="144">
 			<committed/>
