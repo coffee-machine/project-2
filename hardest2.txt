@@ -1,0 +1,15 @@
+// Hardest2
+game = Game(9);
+veh1 = Vehicle(0,0,0,2);
+veh3 = Vehicle(2,3,0,3);
+veh4 = Vehicle(3,0,0,3);
+veh6 = Vehicle(5,3,0,3);
+veh13 = Vehicle(3,5,1,2);
+veh16 = Vehicle(4,2,1,2);
+veh17 = Vehicle(1,1,1,2);
+veh18 = Vehicle(4,0,1,2);
+
+player = Player(3);
+
+// List one or more processes to be composed into a system.
+system game, veh1, veh3, veh4, veh6, veh13, veh16, veh17, veh18, player;
