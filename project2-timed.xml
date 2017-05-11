@@ -128,31 +128,31 @@ void initCar() {
     }
 }</declaration>
 		<location id="id0" x="399" y="76">
+			<label kind="invariant" x="255" y="68">vehicle_time &lt;= 5</label>
 		</location>
 		<location id="id1" x="407" y="-76">
+			<label kind="invariant" x="263" y="-85">vehicle_time &lt;= 2</label>
 		</location>
 		<location id="id2" x="-459" y="68">
+			<label kind="invariant" x="-442" y="59">vehicle_time &lt;= 5</label>
 		</location>
 		<location id="id3" x="-467" y="-68">
+			<label kind="invariant" x="-450" y="-85">vehicle_time &lt;= 2</label>
 		</location>
 		<location id="id4" x="331" y="153">
 			<name x="263" y="170">truckHasMovedForth</name>
-			<label kind="invariant" x="272" y="187">vehicle_time &lt;= 5</label>
 		</location>
 		<location id="id5" x="-382" y="144">
 			<name x="-450" y="161">truckHasMovedBack</name>
-			<label kind="invariant" x="-442" y="178">vehicle_time &lt;= 5</label>
 		</location>
 		<location id="id6" x="-25" y="119">
 			<committed/>
 		</location>
 		<location id="id7" x="-382" y="-153">
 			<name x="-442" y="-187">carHasMovedBack</name>
-			<label kind="invariant" x="-442" y="-204">vehicle_time &lt;= 2</label>
 		</location>
 		<location id="id8" x="331" y="-153">
 			<name x="271" y="-187">carHasMovedForth</name>
-			<label kind="invariant" x="272" y="-204">vehicle_time &lt;= 2</label>
 		</location>
 		<location id="id9" x="-382" y="0">
 			<committed/>
@@ -251,19 +251,19 @@ void initCar() {
 		</transition>
 	</template>
 	<system>// Place template instantiations here.
-Car0 =  Car(2, 2,3, 1, true);  // Red car
-Car1 =  Car(3, 0,5, 1, false); // Truck no. 13
-Car2 =  Car(2, 0,3, 0, false); // Car no. 1
-Car3 =  Car(2, 1,4, 1, false); // Car no. 14
-Car4 =  Car(2, 3,4, 0, false); // Car no. 4
-Car5 =  Car(3, 4,3, 0, false); // Truck no. 5
-Car6 =  Car(3, 5,3, 0, false); // Truck no. 6
-Car7 =  Car(2, 0,2, 1, false); // Car no. 16
-Car8 =  Car(2, 1,0, 0, false); // Car no. 2
-Car9 =  Car(2, 2,1, 0, false); // Car no. 3
-Car10 = Car(2, 2,0, 1, false); // Car no. 18
-Car11 = Car(2, 4,1, 1, false); // Car no. 17
-Car12 = Car(2, 4,0, 1, false); // Car no. 24
+Car0 =  Car(2, 3,3, 1, true); // Red car
+Car1 =  Car(3, 0,0, 0, false); // Truck
+Car2 =  Car(2, 1,0, 1, false);
+Car3 =  Car(2, 4,0, 1, false);
+Car4 =  Car(2, 4,1, 1, false);
+Car5 =  Car(2, 3,0, 0, false);
+Car6 =  Car(2, 1,2, 0, false);
+Car7 =  Car(2, 2,3, 0, false); 
+Car8 =  Car(2, 3,2, 1, false);
+Car9 =  Car(3, 5,2, 0, false); // Truck
+Car10 = Car(2, 4,4, 0, false);
+Car11 = Car(2, 2,5, 1, false);
+Car12 = Car(2, 0,5, 1, false);
 // List one or more processes to be composed into a system.
 system Car0, Car1, Car2, Car3, Car4, Car5, Car6, Car7, Car8, Car9, Car10, Car11, Car12;</system>
 	<queries>
@@ -274,7 +274,7 @@ system Car0, Car1, Car2, Car3, Car4, Car5, Car6, Car7, Car8, Car9, Car10, Car11,
 			</comment>
 		</query>
 		<query>
-			<formula>E&lt;&gt; not deadlock
+			<formula>E&lt;&gt; deadlock
 			</formula>
 			<comment>
 			</comment>
