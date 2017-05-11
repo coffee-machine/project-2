@@ -23,7 +23,7 @@ int steps = 0;
 
 	gameCreated = true;
 }</declaration>
-		<location id="id0" x="128" y="-40">
+		<location id="id0" x="127" y="-42">
 		</location>
 		<location id="id1" x="8" y="-42">
 			<name x="-8" y="-76">Begin</name>
@@ -138,23 +138,23 @@ void create()
 			<name x="-161" y="-42">Initialization</name>
 			<committed/>
 		</location>
-		<location id="id3" x="348" y="0">
-			<name x="365" y="-8">FinishMove</name>
+		<location id="id3" x="306" y="0">
+			<name x="323" y="-8">FinishMove</name>
 			<committed/>
 		</location>
 		<location id="id4" x="68" y="0">
 			<name x="-25" y="8">PerformMove</name>
 		</location>
-		<location id="id5" x="-408" y="0">
-			<name x="-442" y="-42">GameStart</name>
+		<location id="id5" x="-323" y="0">
+			<name x="-357" y="-42">GameStart</name>
 			<committed/>
 		</location>
 		<init ref="id5"/>
 		<transition>
 			<source ref="id3"/>
 			<target ref="id4"/>
-			<label kind="comments" x="102" y="-25">check if more moves can be made</label>
-			<nail x="246" y="0"/>
+			<label kind="comments" x="127" y="-25">checks for moves</label>
+			<nail x="204" y="0"/>
 			<nail x="119" y="0"/>
 		</transition>
 		<transition>
@@ -165,40 +165,40 @@ void create()
 		<transition>
 			<source ref="id4"/>
 			<target ref="id3"/>
-			<label kind="guard" x="161" y="85">checkRight()</label>
-			<label kind="assignment" x="161" y="59">moveRight()</label>
-			<nail x="119" y="85"/>
-			<nail x="289" y="85"/>
+			<label kind="guard" x="144" y="68">checkRight()</label>
+			<label kind="assignment" x="144" y="42">moveRight()</label>
+			<nail x="119" y="68"/>
+			<nail x="247" y="68"/>
 		</transition>
 		<transition>
 			<source ref="id4"/>
 			<target ref="id3"/>
-			<label kind="guard" x="161" y="-85">checkLeft()</label>
-			<label kind="assignment" x="161" y="-109">moveLeft()</label>
-			<nail x="119" y="-85"/>
-			<nail x="289" y="-85"/>
+			<label kind="guard" x="144" y="-68">checkLeft()</label>
+			<label kind="assignment" x="144" y="-93">moveLeft()</label>
+			<nail x="119" y="-68"/>
+			<nail x="246" y="-68"/>
 		</transition>
 		<transition>
 			<source ref="id4"/>
 			<target ref="id3"/>
-			<label kind="guard" x="161" y="170">checkDown()</label>
-			<label kind="assignment" x="161" y="144">moveDown()</label>
-			<nail x="67" y="168"/>
-			<nail x="347" y="168"/>
+			<label kind="guard" x="145" y="121">checkDown()</label>
+			<label kind="assignment" x="145" y="95">moveDown()</label>
+			<nail x="68" y="119"/>
+			<nail x="306" y="119"/>
 		</transition>
 		<transition>
 			<source ref="id4"/>
 			<target ref="id3"/>
-			<label kind="guard" x="161" y="-169">checkUp()</label>
-			<label kind="assignment" x="161" y="-195">moveUp()</label>
-			<nail x="67" y="-167"/>
-			<nail x="347" y="-167"/>
+			<label kind="guard" x="144" y="-119">checkUp()</label>
+			<label kind="assignment" x="144" y="-144">moveUp()</label>
+			<nail x="68" y="-119"/>
+			<nail x="306" y="-119"/>
 		</transition>
 		<transition>
 			<source ref="id5"/>
 			<target ref="id2"/>
-			<label kind="guard" x="-331" y="-25">gameCreated == true</label>
-			<label kind="assignment" x="-289" y="0">create()</label>
+			<label kind="guard" x="-297" y="-25">gameCreated == true</label>
+			<label kind="assignment" x="-255" y="0">create()</label>
 			<nail x="-178" y="0"/>
 		</transition>
 	</template>
@@ -261,58 +261,58 @@ bool playerWin()
 			<name x="-518" y="-42">Initialization</name>
 			<committed/>
 		</location>
-		<location id="id7" x="146" y="0" color="#00ff00">
-			<name x="136" y="-34">End</name>
+		<location id="id7" x="-9" y="0" color="#00ff00">
+			<name x="-19" y="-34">End</name>
 		</location>
-		<location id="id8" x="-17" y="0">
-			<name x="-8" y="8">CheckWin</name>
+		<location id="id8" x="-127" y="0">
+			<name x="-118" y="8">CheckWin</name>
 			<committed/>
 		</location>
-		<location id="id9" x="-255" y="0">
-			<name x="-348" y="8">PerformMove</name>
+		<location id="id9" x="-297" y="0">
+			<name x="-390" y="8">PerformMove</name>
 		</location>
-		<location id="id10" x="-784" y="0">
-			<name x="-816" y="-42">GameStart</name>
-			<label kind="comments" x="-816" y="25">RED CAR</label>
+		<location id="id10" x="-671" y="0">
+			<name x="-703" y="-42">GameStart</name>
+			<label kind="comments" x="-703" y="25">RED CAR</label>
 			<committed/>
 		</location>
 		<init ref="id10"/>
 		<transition>
 			<source ref="id10"/>
 			<target ref="id6"/>
-			<label kind="guard" x="-714" y="-17">gameCreated == true</label>
-			<label kind="assignment" x="-671" y="0">create()</label>
+			<label kind="guard" x="-654" y="-25">gameCreated == true</label>
+			<label kind="assignment" x="-609" y="0">create()</label>
 		</transition>
 		<transition>
 			<source ref="id6"/>
 			<target ref="id9"/>
-			<label kind="guard" x="-456" y="-24">playersCreated == true</label>
+			<label kind="guard" x="-467" y="-25">playersCreated == true</label>
 		</transition>
 		<transition>
 			<source ref="id8"/>
 			<target ref="id7"/>
-			<label kind="guard" x="26" y="-24">playerWin()</label>
+			<label kind="guard" x="-110" y="-25">playerWin()</label>
 		</transition>
 		<transition>
 			<source ref="id8"/>
 			<target ref="id9"/>
-			<label kind="guard" x="-195" y="-25">playerWin() == false</label>
+			<label kind="guard" x="-272" y="-25">playerWin() == false</label>
 		</transition>
 		<transition>
 			<source ref="id9"/>
 			<target ref="id8"/>
-			<label kind="guard" x="-178" y="85">checkRight()</label>
-			<label kind="assignment" x="-178" y="59">moveRight()</label>
-			<nail x="-255" y="85"/>
-			<nail x="-17" y="85"/>
+			<label kind="guard" x="-246" y="68">checkRight()</label>
+			<label kind="assignment" x="-246" y="42">moveRight()</label>
+			<nail x="-298" y="68"/>
+			<nail x="-128" y="68"/>
 		</transition>
 		<transition>
 			<source ref="id9"/>
 			<target ref="id8"/>
-			<label kind="guard" x="-178" y="-85">checkLeft()</label>
-			<label kind="assignment" x="-178" y="-111">moveLeft()</label>
-			<nail x="-255" y="-85"/>
-			<nail x="-17" y="-85"/>
+			<label kind="guard" x="-246" y="-68">checkLeft()</label>
+			<label kind="assignment" x="-246" y="-93">moveLeft()</label>
+			<nail x="-298" y="-67"/>
+			<nail x="-128" y="-67"/>
 		</transition>
 	</template>
 	<system>// Hardest2
