@@ -2,13 +2,13 @@
 <!DOCTYPE nta PUBLIC '-//Uppaal Team//DTD Flat System 1.1//EN' 'http://www.it.uu.se/research/group/darts/uppaal/flat-1_2.dtd'>
 <nta>
 	<declaration>// Place global declarations here.
-    bool board[6][6] := { {0,0,0,0,0,0},
-                          {0,0,0,0,0,0},
-                          {0,0,0,0,0,0}, 
-                          {0,0,0,0,0,0},
-                          {0,0,0,0,0,0},
-                          {0,0,0,0,0,0}
-                        };
+bool board[6][6] := { {0,0,0,0,0,0},
+                      {0,0,0,0,0,0},
+                      {0,0,0,0,0,0}, 
+                      {0,0,0,0,0,0},
+                      {0,0,0,0,0,0},
+                      {0,0,0,0,0,0}
+                    };
 
 int steps;
 clock time;
@@ -137,79 +137,68 @@ void initCar() {
     }
 }</declaration>
 		<location id="id0" x="187" y="229">
-			<label kind="invariant" x="34" y="246">vehicle_time &lt;= this_time</label>
+			<label kind="invariant" x="102" y="255">vehicle_time &lt;= this_time</label>
 		</location>
 		<location id="id1" x="187" y="-212">
-			<label kind="invariant" x="25" y="-246">vehicle_time &lt;= this_time</label>
+			<label kind="invariant" x="102" y="-246">vehicle_time &lt;= this_time</label>
 		</location>
 		<location id="id2" x="-212" y="0">
 			<committed/>
 		</location>
-		<location id="id3" x="187" y="-85">
-			<name x="51" y="-102">carHasMovedBack</name>
+		<location id="id3" x="187" y="0">
+			<name x="204" y="-8">vehicleMoved</name>
 		</location>
-		<location id="id4" x="187" y="85">
-			<name x="42" y="76">carHasMovedForth</name>
-		</location>
-		<location id="id5" x="-59" y="-212">
+		<location id="id4" x="-59" y="-212">
 			<committed/>
 		</location>
-		<location id="id6" x="-59" y="229">
+		<location id="id5" x="-59" y="229">
 			<committed/>
 		</location>
-		<location id="id7" x="-59" y="0">
+		<location id="id6" x="-59" y="0">
 			<name x="-102" y="-25">WAIT</name>
 		</location>
 		<init ref="id2"/>
 		<transition>
-			<source ref="id0"/>
-			<target ref="id4"/>
-			<label kind="guard" x="8" y="136">vehicle_time == this_time</label>
-			<label kind="assignment" x="8" y="153">move(forth)</label>
+			<source ref="id3"/>
+			<target ref="id6"/>
+			<label kind="assignment" x="-41" y="0">vehicle_time := 0,
+anybody_can_move := true</label>
 		</transition>
 		<transition>
-			<source ref="id6"/>
+			<source ref="id0"/>
+			<target ref="id3"/>
+			<label kind="guard" x="8" y="102">vehicle_time == this_time</label>
+			<label kind="assignment" x="8" y="119">move(forth)</label>
+		</transition>
+		<transition>
+			<source ref="id5"/>
 			<target ref="id0"/>
 		</transition>
 		<transition>
 			<source ref="id1"/>
 			<target ref="id3"/>
-			<label kind="guard" x="8" y="-170">vehicle_time == this_time</label>
-			<label kind="assignment" x="8" y="-153">move(back)</label>
+			<label kind="guard" x="8" y="-127">vehicle_time == this_time</label>
+			<label kind="assignment" x="8" y="-110">move(back)</label>
 		</transition>
 		<transition>
 			<source ref="id2"/>
-			<target ref="id7"/>
+			<target ref="id6"/>
 			<label kind="assignment" x="-170" y="0">initCar()</label>
 		</transition>
 		<transition>
 			<source ref="id4"/>
-			<target ref="id7"/>
-			<label kind="assignment" x="-25" y="8">vehicle_time := 0, 
-anybody_can_move := true</label>
-			<nail x="187" y="0"/>
-		</transition>
-		<transition>
-			<source ref="id3"/>
-			<target ref="id7"/>
-			<label kind="assignment" x="-25" y="-42">vehicle_time := 0, 
-anybody_can_move := true</label>
-			<nail x="187" y="0"/>
-		</transition>
-		<transition>
-			<source ref="id5"/>
 			<target ref="id1"/>
 		</transition>
 		<transition>
-			<source ref="id7"/>
-			<target ref="id5"/>
+			<source ref="id6"/>
+			<target ref="id4"/>
 			<label kind="guard" x="-323" y="-136">isOpen(back) &amp;&amp; anybody_can_move</label>
 			<label kind="assignment" x="-263" y="-119">anybody_can_move := false, 
 vehicle_time := 0</label>
 		</transition>
 		<transition>
-			<source ref="id7"/>
-			<target ref="id6"/>
+			<source ref="id6"/>
+			<target ref="id5"/>
 			<label kind="guard" x="-323" y="85">isOpen(forth) &amp;&amp; anybody_can_move</label>
 			<label kind="assignment" x="-263" y="102">anybody_can_move := false, 
 vehicle_time := 0</label>
