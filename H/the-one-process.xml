@@ -58,6 +58,7 @@ int puzzleHard2[6][6] = {   {0,0,2,3,3,4},
 			<name x="-212" y="-85">WIN</name>
 		</location>
 		<location id="id2" x="0" y="-76">
+			<name x="-59" y="-68">victory?</name>
 		</location>
 		<location id="id3" x="0" y="0">
 		</location>
