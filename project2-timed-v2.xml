@@ -110,6 +110,7 @@ void initCar() {
         this_time := 5;
     }    
 
+    // Setting vehicle's position in board
     if (direction == 0) {
         int i;
         for (i = 0; i &lt; size; i++) {
@@ -135,82 +136,99 @@ void initCar() {
         }
     }
 }</declaration>
-		<location id="id0" x="-25" y="119">
+		<location id="id0" x="187" y="229">
+			<label kind="invariant" x="34" y="246">vehicle_time &lt;= this_time</label>
+		</location>
+		<location id="id1" x="187" y="-212">
+			<label kind="invariant" x="25" y="-246">vehicle_time &lt;= this_time</label>
+		</location>
+		<location id="id2" x="-212" y="0">
 			<committed/>
 		</location>
-		<location id="id1" x="-382" y="-153">
-			<name x="-442" y="-187">carHasMovedBack</name>
-			<label kind="invariant" x="-442" y="-204">vehicle_time &lt;= this_time</label>
+		<location id="id3" x="187" y="-85">
+			<name x="51" y="-102">carHasMovedBack</name>
 		</location>
-		<location id="id2" x="331" y="-153">
-			<name x="271" y="-187">carHasMovedForth</name>
-			<label kind="invariant" x="272" y="-204">vehicle_time &lt;= this_time</label>
+		<location id="id4" x="187" y="85">
+			<name x="42" y="76">carHasMovedForth</name>
 		</location>
-		<location id="id3" x="-382" y="0">
+		<location id="id5" x="-59" y="-212">
+			<committed/>
 		</location>
-		<location id="id4" x="331" y="0">
+		<location id="id6" x="-59" y="229">
+			<committed/>
 		</location>
-		<location id="id5" x="-25" y="0">
-			<name x="-42" y="-42">WAIT</name>
+		<location id="id7" x="-59" y="0">
+			<name x="-102" y="-25">WAIT</name>
 		</location>
-		<init ref="id0"/>
-		<transition>
-			<source ref="id4"/>
-			<target ref="id2"/>
-			<label kind="guard" x="365" y="-136">vehicle_time == this_time</label>
-			<label kind="assignment" x="382" y="-119">move(forth)</label>
-		</transition>
-		<transition>
-			<source ref="id3"/>
-			<target ref="id1"/>
-			<label kind="guard" x="-595" y="-136">vehicle_time == this_time</label>
-			<label kind="assignment" x="-552" y="-119">move(back)</label>
-		</transition>
+		<init ref="id2"/>
 		<transition>
 			<source ref="id0"/>
-			<target ref="id5"/>
-			<label kind="assignment" x="-85" y="59">initCar()</label>
+			<target ref="id4"/>
+			<label kind="guard" x="8" y="136">vehicle_time == this_time</label>
+			<label kind="assignment" x="8" y="153">move(forth)</label>
 		</transition>
 		<transition>
-			<source ref="id2"/>
-			<target ref="id5"/>
-			<label kind="assignment" x="0" y="-161">vehicle_time := 0, anybody_can_move := true</label>
-			<nail x="136" y="-102"/>
+			<source ref="id6"/>
+			<target ref="id0"/>
 		</transition>
 		<transition>
 			<source ref="id1"/>
-			<target ref="id5"/>
-			<label kind="assignment" x="-340" y="-161">vehicle_time := 0, anybody_can_move := true</label>
-			<nail x="-187" y="-110"/>
-		</transition>
-		<transition>
-			<source ref="id5"/>
 			<target ref="id3"/>
-			<label kind="guard" x="-348" y="0">isOpen(back) &amp;&amp; anybody_can_move</label>
-			<label kind="assignment" x="-365" y="-17">anybody_can_move := false, vehicle_time := 0</label>
+			<label kind="guard" x="8" y="-170">vehicle_time == this_time</label>
+			<label kind="assignment" x="8" y="-153">move(back)</label>
+		</transition>
+		<transition>
+			<source ref="id2"/>
+			<target ref="id7"/>
+			<label kind="assignment" x="-170" y="0">initCar()</label>
+		</transition>
+		<transition>
+			<source ref="id4"/>
+			<target ref="id7"/>
+			<label kind="assignment" x="-25" y="8">vehicle_time := 0, 
+anybody_can_move := true</label>
+			<nail x="187" y="0"/>
+		</transition>
+		<transition>
+			<source ref="id3"/>
+			<target ref="id7"/>
+			<label kind="assignment" x="-25" y="-42">vehicle_time := 0, 
+anybody_can_move := true</label>
+			<nail x="187" y="0"/>
 		</transition>
 		<transition>
 			<source ref="id5"/>
-			<target ref="id4"/>
-			<label kind="guard" x="34" y="0">isOpen(forth) &amp;&amp; anybody_can_move</label>
-			<label kind="assignment" x="0" y="-17">anybody_can_move := false, vehicle_time := 0</label>
+			<target ref="id1"/>
+		</transition>
+		<transition>
+			<source ref="id7"/>
+			<target ref="id5"/>
+			<label kind="guard" x="-323" y="-136">isOpen(back) &amp;&amp; anybody_can_move</label>
+			<label kind="assignment" x="-263" y="-119">anybody_can_move := false, 
+vehicle_time := 0</label>
+		</transition>
+		<transition>
+			<source ref="id7"/>
+			<target ref="id6"/>
+			<label kind="guard" x="-323" y="85">isOpen(forth) &amp;&amp; anybody_can_move</label>
+			<label kind="assignment" x="-263" y="102">anybody_can_move := false, 
+vehicle_time := 0</label>
 		</transition>
 	</template>
-	<system>// Place template instantiations here.
-Car0 =  Car(2, 2,3, 1, true);  // Red car
-Car1 =  Car(3, 0,5, 1, false); // Truck no. 13
-Car2 =  Car(2, 0,3, 0, false); // Car no. 1
-Car3 =  Car(2, 1,4, 1, false); // Car no. 14
-Car4 =  Car(2, 3,4, 0, false); // Car no. 4
-Car5 =  Car(3, 4,3, 0, false); // Truck no. 5
-Car6 =  Car(3, 5,3, 0, false); // Truck no. 6
-Car7 =  Car(2, 0,2, 1, false); // Car no. 16
-Car8 =  Car(2, 1,0, 0, false); // Car no. 2
-Car9 =  Car(2, 2,1, 0, false); // Car no. 3
-Car10 = Car(2, 2,0, 1, false); // Car no. 18
-Car11 = Car(2, 4,1, 1, false); // Car no. 17
-Car12 = Car(2, 4,0, 1, false); // Car no. 24
-// List one or more processes to be composed into a system.
+	<system>Car0 =  Car(2, 2,3, 1, true);  // Red car\
+Car1 =  Car(3, 0,5, 1, false); // Truck no. 13\
+Car2 =  Car(2, 0,3, 0, false); // Car no. 1\
+Car3 =  Car(2, 1,4, 1, false); // Car no. 14\
+Car4 =  Car(2, 3,4, 0, false); // Car no. 4\
+Car5 =  Car(3, 4,3, 0, false); // Truck no. 5\
+Car6 =  Car(3, 5,3, 0, false); // Truck no. 6\
+Car7 =  Car(2, 0,2, 1, false); // Car no. 16\
+Car8 =  Car(2, 1,0, 0, false); // Car no. 2\
+Car9 =  Car(2, 2,1, 0, false); // Car no. 3\
+Car10 = Car(2, 2,0, 1, false); // Car no. 18\
+Car11 = Car(2, 4,1, 1, false); // Car no. 17\
+Car12 = Car(2, 4,0, 1, false); // Car no. 24\
+// List one or more processes to be composed into a system.\
 system Car0, Car1, Car2, Car3, Car4, Car5, Car6, Car7, Car8, Car9, Car10, Car11, Car12;</system>
 	<queries>
 		<query>
@@ -220,7 +238,7 @@ system Car0, Car1, Car2, Car3, Car4, Car5, Car6, Car7, Car8, Car9, Car10, Car11,
 			</comment>
 		</query>
 		<query>
-			<formula>E&lt;&gt; not deadlock
+			<formula>E&lt;&gt; deadlock
 			</formula>
 			<comment>
 			</comment>
